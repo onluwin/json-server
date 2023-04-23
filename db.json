@@ -1,0 +1,11 @@
+{
+  "users": [
+    {
+      "name": "nikita",
+      "books": [
+        { "title": "Batman", "text": "Batman text" },
+        { "title": "Spider-man", "text": "Spider-man text" }
+      ]
+    }
+  ]
+}
