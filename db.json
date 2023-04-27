@@ -3,9 +3,23 @@
     {
       "name": "nikita",
       "books": [
-        { "title": "Batman", "text": "Batman text" },
-        { "title": "Spider-man", "text": "Spider-man text" }
-      ]
+        {
+          "title": "Batman",
+          "text": "Batman text"
+        }
+      ],
+      "id": 1,
+      "profile": {
+        "color": "green"
+      }
+    },
+    {
+      "name": "vlad123",
+      "books": [],
+      "profile": {
+        "color": "#a9bfbd"
+      },
+      "id": 2
     }
   ]
 }

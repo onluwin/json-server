@@ -1,19 +1,20 @@
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 
-import { StyledLoginBackdrop, StyledLoginModal } from './LoginModal.styled';
-import { CloseLoginModalBtn } from './CloseLoginModalBtn.styled.js';
+import { CloseLoginModalBtn } from '../Modal/CloseLoginModalBtn.styled.js';
 
-export const Modal = ({ setIsLoginModalVisible }) => {
+import { StyledLoginBackdrop, StyledLoginModal } from './LoginModal.styled';
+
+export const Modal = ({ handleCloseModal, children }) => {
   return (
     <StyledLoginBackdrop>
       <StyledLoginModal>
-        Modal
         <CloseLoginModalBtn
-          type="CloseLoginModalBtn"
-          onClick={() => setIsLoginModalVisible(false)}
+          type="button"
+          onClick={() => handleCloseModal(false)}
         >
           <AiOutlineCloseCircle size={25} style={{ margin: 'auto' }} />
         </CloseLoginModalBtn>
+        {children}
       </StyledLoginModal>
     </StyledLoginBackdrop>
   );
