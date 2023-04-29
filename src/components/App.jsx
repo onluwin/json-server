@@ -41,6 +41,13 @@ export const App = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if (user.name === '') {
+      return;
+    }
+    setUserToLocalStorage(user);
+  }, [user]);
+
   const setUserToLocalStorage = user => {
     try {
       localStorage.setItem('user', JSON.stringify(user));
@@ -61,11 +68,9 @@ export const App = () => {
   };
   const loginUser = async user => {
     setUser(user);
-    setUserToLocalStorage(user);
     setIsLoggedIn(true);
     setIsLoginModalVisible(false);
   };
-  useEffect(() => console.log(user), [user]);
 
   const handleLoginSubmit = async e => {
     e.preventDefault();
@@ -94,6 +99,13 @@ export const App = () => {
     e.preventDefault();
 
     const username = e.currentTarget.elements.username.value;
+
+    const { data } = await axios.get('/users');
+    if (data.some(({ name }) => name === username)) {
+      return toast.error('Такой пользователь уже существует', {
+        position: 'bottom-right',
+      });
+    }
     try {
       await registerUser(username);
       toast.success('Вы успешно зарегестрировали новый аккаунт', {

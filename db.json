@@ -10,20 +10,33 @@
         {
           "title": "Spider-Man",
           "text": "some text"
-        },
-        {
-          "title": "batman 2",
-          "text": ""
-        },
-        {
-          "title": "ba",
-          "text": "f"
         }
       ],
       "profile": {
         "color": "#804ff6"
       },
+      "id": 1
+    },
+    {
+      "name": "vlad",
+      "books": [],
+      "profile": {
+        "color": "#029865"
+      },
       "id": 2
+    },
+    {
+      "name": "nikita",
+      "books": [
+        {
+          "title": "123",
+          "text": "312"
+        }
+      ],
+      "profile": {
+        "color": "#47da1d"
+      },
+      "id": 3
     }
   ]
 }
