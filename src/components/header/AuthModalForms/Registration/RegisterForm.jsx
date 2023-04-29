@@ -3,7 +3,7 @@ import { Field, Form, Formik } from 'formik';
 export const RegisterForm = ({ handleSubmit }) => {
   return (
     <>
-      <Formik initialValues={{ username: '' }} onSubmit={handleSubmit}>
+      <Formik initialValues={{ username: '' }}>
         <Form
           style={{ marginTop: 25 }}
           autoComplete="off"

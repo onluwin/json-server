@@ -1,23 +1,27 @@
 {
   "users": [
     {
-      "name": "nikita",
+      "name": "vlad",
       "books": [
         {
-          "title": "Batman",
-          "text": "Batman text"
+          "title": "batman",
+          "text": "text"
+        },
+        {
+          "title": "Spider-Man",
+          "text": "some text"
+        },
+        {
+          "title": "batman 2",
+          "text": ""
+        },
+        {
+          "title": "ba",
+          "text": "f"
         }
       ],
-      "id": 1,
       "profile": {
-        "color": "green"
-      }
-    },
-    {
-      "name": "vlad123",
-      "books": [],
-      "profile": {
-        "color": "#a9bfbd"
+        "color": "#804ff6"
       },
       "id": 2
     }

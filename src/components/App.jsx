@@ -7,14 +7,11 @@ import { toast } from 'react-hot-toast';
 import { BooksList } from './Books/BooksList';
 import { RegisterModalPortal } from './RegisterModal/RegisterModalPortal';
 import { getRandomHexColor } from 'utils/getRandomColor';
+import { AddBookModalPortal } from './Books/Add/Modal/AddBookModalPortal';
 
 axios.defaults.baseURL = 'http://localhost:7777';
 
 export const App = () => {
-  // const [books, setBooks] = useState(null);
-  // const [isLoading, setIsLoading] = useState(null);
-
-  // NEW
   const [username, setUsername] = useState('');
   const [user, setUser] = useState({
     name: username,
@@ -25,6 +22,8 @@ export const App = () => {
 
   const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
   const [isRegisterModalVisible, setIsRegisterModalVisible] = useState(false);
+  const [isAddBookModalVisible, setIsAddBookModalVisible] = useState(false);
+
   const [initRender, setInitRender] = useState(false);
 
   useEffect(() => {
@@ -59,8 +58,6 @@ export const App = () => {
       },
     });
     setIsRegisterModalVisible(false);
-    // setUser(response.data);
-    // return setUserToLocalStorage(user);
   };
   const loginUser = async user => {
     setUser(user);
@@ -68,27 +65,7 @@ export const App = () => {
     setIsLoggedIn(true);
     setIsLoginModalVisible(false);
   };
-  // const handleSubmit = async e => {
-  //   e.preventDefault();
-
-  //   const username = e.currentTarget.elements.username.value;
-
-  //   setUsername(username);
-
-  //   // Hide modal
-  //   setIsLoginModalVisible(false);
-
-  //   const allUsers = await axios.get('/users');
-  //   const { data } = allUsers;
-  //   console.log('allUsers до post', data);
-  //   const searchedUser = data.find(user => user.name === username);
-  //   if (!searchedUser) {
-  //     return registerUser(username);
-  //   }
-  //   loginUser(searchedUser);
-
-  //   toast.success('Вы успешно вошли в аккаунт', { position: 'bottom-right' });
-  // };
+  useEffect(() => console.log(user), [user]);
 
   const handleLoginSubmit = async e => {
     e.preventDefault();
@@ -127,6 +104,46 @@ export const App = () => {
     }
   };
 
+  const handleAddBookSubmit = async e => {
+    e.preventDefault();
+    const formRef = e.currentTarget;
+    const { title, text } = formRef.elements;
+    const newBook = {
+      title: title.value,
+      text: text.value,
+    };
+    console.log(newBook);
+
+    const { data } = await axios.get(`/users/${user.id}`);
+
+    // Проверка на пустые input'ы
+    if (newBook.title === '' || newBook.text === '') {
+      return toast.error('Все поля должны быть заполнены', {
+        position: 'bottom-right',
+      });
+    }
+
+    // Проверка на имеющуюся книгу
+    if (
+      data.books.some(
+        ({ title, text }) => title === newBook.title || text === newBook.text
+      )
+    ) {
+      return toast.error('У вас уже есть такая книга', {
+        position: 'bottom-right',
+      });
+    }
+
+    const updatedUser = await axios.patch(`/users/${user.id}`, {
+      books: [...data.books, newBook],
+    });
+
+    setUser(prevUser => ({ ...prevUser, books: updatedUser.data.books }));
+
+    formRef.reset();
+    setIsAddBookModalVisible(false);
+  };
+
   return (
     <div>
       {initRender && (
@@ -137,6 +154,7 @@ export const App = () => {
           setUser={setUser}
           setIsLoginModalVisible={setIsLoginModalVisible}
           setIsRegisterModalVisible={setIsRegisterModalVisible}
+          setIsAddBookModalVisible={setIsAddBookModalVisible}
           setIsLoggedIn={setIsLoggedIn}
           isLoggedIn={isLoggedIn}
         />
@@ -158,6 +176,12 @@ export const App = () => {
         <RegisterModalPortal
           handleCloseModal={setIsRegisterModalVisible}
           handleRegisterSubmit={handleRegisterSubmit}
+        />
+      )}
+      {isAddBookModalVisible && (
+        <AddBookModalPortal
+          handleCloseModal={setIsAddBookModalVisible}
+          handleAddBookSubmit={handleAddBookSubmit}
         />
       )}
     </div>

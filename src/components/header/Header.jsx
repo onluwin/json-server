@@ -1,9 +1,10 @@
 import { toast } from 'react-hot-toast';
 
-import { HeaderContainer, StyledHeader } from './Header.styled';
+import { AuthBox, HeaderContainer, StyledHeader } from './Header.styled';
 import { UserAvatar } from './UserAvatar';
 import { LoginBtn } from '../AuthBtns/LoginBtn';
 import { RegisterBtn } from 'components/AuthBtns/RegisterBtn';
+import { AddBookBtn } from '../Books/Add/Button/AddBookBtn';
 
 export const Header = ({
   username,
@@ -12,6 +13,7 @@ export const Header = ({
   setUser,
   setIsLoginModalVisible,
   setIsRegisterModalVisible,
+  setIsAddBookModalVisible,
   setIsLoggedIn,
   isLoggedIn,
 }) => {
@@ -26,17 +28,24 @@ export const Header = ({
   return (
     <StyledHeader>
       <HeaderContainer>
-        {!isLoggedIn && (
-          <RegisterBtn openRegModal={setIsRegisterModalVisible} />
-        )}
-        <LoginBtn
-          isLoggedIn={username === '' ? false : true}
-          logOut={logOut}
-          openModal={setIsLoginModalVisible}
-        />
-        {username !== '' && (
-          <UserAvatar username={username} backgroundColor={userBgColor} />
-        )}
+        <nav style={{ marginRight: 'auto', marginLeft: '20px' }}>
+          {isLoggedIn && (
+            <AddBookBtn openAddBookModal={setIsAddBookModalVisible} />
+          )}
+        </nav>
+        <AuthBox>
+          {!isLoggedIn && (
+            <RegisterBtn openRegModal={setIsRegisterModalVisible} />
+          )}
+          <LoginBtn
+            isLoggedIn={username === '' ? false : true}
+            logOut={logOut}
+            openModal={setIsLoginModalVisible}
+          />
+          {username !== '' && (
+            <UserAvatar username={username} backgroundColor={userBgColor} />
+          )}
+        </AuthBox>
       </HeaderContainer>
     </StyledHeader>
   );
